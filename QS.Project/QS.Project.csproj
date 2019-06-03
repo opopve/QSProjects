@@ -176,6 +176,7 @@
     <Compile Include="Project.DB\DefaultSessionProvider.cs" />
     <Compile Include="DomainModel\UoW\DefaultUnitOfWorkFactory.cs" />
     <Compile Include="DomainModel\UoW\IUnitOfWorkFactory.cs" />
+    <Compile Include="Project.Journal\IJournalFilter.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Project.Domain\" />
@@ -197,6 +198,7 @@
     <Folder Include="DomainModel\Config\" />
     <Folder Include="Tools\" />
     <Folder Include="DomainModel\NotifyChange\" />
+    <Folder Include="Project.Journal\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

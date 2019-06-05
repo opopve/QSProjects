@@ -4,7 +4,7 @@ namespace QS.Project.Journal
 {
 	public interface IJournalFilter
 	{
-		ICriterion GetFilter();
+		//ICriterion GetFilter();
 		event EventHandler OnFiltered;
 		void Update();
 	}

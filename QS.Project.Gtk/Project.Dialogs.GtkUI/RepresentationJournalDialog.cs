@@ -71,7 +71,7 @@ namespace QS.Project.Dialogs.GtkUI
 		}
 
 		public virtual IJournalAction DoubleClickAction { get; set; }
-		public virtual List<IJournalPopupAction> PopupActions { get; set; }
+		//public virtual List<IJournalPopupAction> PopupActions { get; set; }
 
 		#endregion
 
@@ -133,11 +133,11 @@ namespace QS.Project.Dialogs.GtkUI
 					SetFilter(resolvedFilterWidget);
 				}
                 hboxSearch.Visible = RepresentationModel.SearchFieldsExist;
-				UpdatePopupItems();
+				//UpdatePopupItems();
             }
         }
 
-		private void UpdatePopupItems()
+		/*private void UpdatePopupItems()
 		{
 			if(PopupActions == null) {
 				PopupActions = new List<IJournalPopupAction>();
@@ -151,7 +151,7 @@ namespace QS.Project.Dialogs.GtkUI
 			foreach(var popupItem in RepresentationModel.PopupItems) {
 				PopupActions.Add(new JournalPopupAction(popupItem));
 			}
-		}
+		}*/
 
 		protected IEntityConfig EntityConfig => DomainConfiguration.GetEntityConfig(RepresentationModel.EntityType);
 
@@ -193,7 +193,7 @@ namespace QS.Project.Dialogs.GtkUI
 			ConfigureActionButtons();
 			CreateButtons();
 			tableview.Selection.Changed += OnTreeviewSelectionChanged;
-			tableview.ButtonReleaseEvent += OnOrmtableviewButtonReleaseEvent;
+			//tableview.ButtonReleaseEvent += OnOrmtableviewButtonReleaseEvent;
 			OnTreeviewSelectionChanged(null, EventArgs.Empty);
 		}
 
@@ -264,7 +264,7 @@ namespace QS.Project.Dialogs.GtkUI
         }
 
 		private Menu popupMenu;
-
+		/*
 		[GLib.ConnectBefore]
         protected void OnOrmtableviewButtonReleaseEvent (object o, ButtonReleaseEventArgs args)
         {
@@ -286,7 +286,7 @@ namespace QS.Project.Dialogs.GtkUI
 				popupMenu.ShowAll();
                 popupMenu.Popup();
             }
-        }
+        }*/
 
         protected void OnButtonRefreshClicked(object sender, EventArgs e)
         {

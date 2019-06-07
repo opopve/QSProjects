@@ -38,5 +38,11 @@ namespace QS.Project.Journal
 			NodeActionsList = new List<IJournalAction>();
 			PopupActionsList = new List<IJournalAction>();
 		}
+
+		protected virtual void UpdateItems(IList items)
+		{
+			Items = items;
+			ItemsListUpdated?.Invoke(this, EventArgs.Empty);
+		}
 	}
 }

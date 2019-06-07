@@ -3,12 +3,13 @@ using QS.DomainModel.Config;
 using QS.Services;
 using QS.DomainModel.Entity;
 using NHibernate;
+using System.ComponentModel;
 
 namespace QS.Project.Journal
 {
 	public abstract class SingleEntityJournalViewModelBase<TEntity, TNode, TFilter> : EntityJournalViewModelBase<TNode, TFilter>
-		where TEntity : class, IDomainObject
-		where TNode : JournalEntityNodeBase
+		where TEntity : class, IDomainObject, INotifyPropertyChanged, new()
+		where TNode : JournalEntityNodeBase<TEntity>
 		where TFilter : IJournalFilter
 	{
 		private readonly ICommonServices commonServices;
@@ -18,11 +19,12 @@ namespace QS.Project.Journal
 		{
 			this.commonServices = commonServices ?? throw new ArgumentNullException(nameof(commonServices));
 			entityType = typeof(TEntity);
-			EntityTypes.Add(entityType);
+			/*RegisterEntity<TEntity>(ItemsSourceQueryFunction);
 			UpdateAllEntityPermissions();
+			commonServices.PermissionService.ValidateUserPermission
 			if(!GetEntityPermission(entityType).CanRead) {
 				AbortOpening($"Нет прав для просмотра документов типа: {entityType.GetSubjectName()}", "Невозможно открыть журнал");
-			}
+			}*/
 		}
 
 		protected abstract Func<IQueryOver<TEntity>> ItemsSourceQueryFunction { get; set; }

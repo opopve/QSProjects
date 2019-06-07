@@ -1,4 +1,6 @@
 ﻿using System;
+using QS.DomainModel.Entity;
+
 namespace QS.Project.Journal
 {
 	public class JournalEntityNodeBase : JournalNodeBase
@@ -10,6 +12,14 @@ namespace QS.Project.Journal
 		protected JournalEntityNodeBase(Type entityType)
 		{
 			EntityType = entityType;
+		}
+	}
+
+	public class JournalEntityNodeBase<TEntity> : JournalEntityNodeBase
+		where TEntity : class, IDomainObject
+	{
+		public JournalEntityNodeBase() : base(typeof(TEntity))
+		{
 		}
 	}
 }

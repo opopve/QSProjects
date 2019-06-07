@@ -76,6 +76,10 @@
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\packages\Newtonsoft.Json.12.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="System.ValueTuple">
+      <HintPath>..\..\Vodovoz\packages\System.ValueTuple.4.5.0\lib\net461\System.ValueTuple.dll</HintPath>
+    </Reference>
+    <Reference Include="mscorlib" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -168,6 +172,7 @@
     <Compile Include="RepresentationModel.GtkUI\JournalPopupItemFactory.cs" />
     <Compile Include="Project.Search.GtkUI\SearchView.cs" />
     <Compile Include="gtk-gui\QS.Project.Search.GtkUI.SearchView.cs" />
+    <Compile Include="TreeViewColumnsConfigFactory.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Widgets.GtkUI\" />

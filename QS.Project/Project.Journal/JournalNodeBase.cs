@@ -1,5 +1,4 @@
-﻿using System;
-namespace QS.Project.Journal
+﻿namespace QS.Project.Journal
 {
 	public abstract class JournalNodeBase
 	{

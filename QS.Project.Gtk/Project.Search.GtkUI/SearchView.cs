@@ -26,6 +26,7 @@ namespace QS.Project.Search.GtkUI
 		protected void OnEntSearchTextChanged(object sender, EventArgs e)
 		{
 			TextChanged?.Invoke(this, e);
+			viewModel.Update();
 		}
 	}
 }

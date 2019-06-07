@@ -124,7 +124,7 @@ namespace QS.Tdi.Gtk
 				throw new NullReferenceException("Мастер вкладка не найдена в списке активных вкладок.");
 
 			var journalTab = slaveTab as ITdiJournal;
-			if(journalTab != null && ((journalTab.UseSlider == null && DefaultUseSlider) || journalTab.UseSlider.Value)) {
+			if(journalTab != null && (!journalTab.UseSlider.HasValue && DefaultUseSlider || journalTab.UseSlider.Value)) {
 				TdiSliderTab slider = new TdiSliderTab((ITdiJournal)slaveTab);
 				slaveTab = slider;
 			}

@@ -9,13 +9,11 @@ namespace QS.Project.Filter
 	public abstract class FilterViewModelBase<TFilter> : WidgetViewModelBase, IDisposable, IJournalFilter
 		where TFilter : FilterViewModelBase<TFilter>
 	{
-		public event EventHandler Refiltered;
+		public event EventHandler OnFiltered;
 
 		IUnitOfWork uow;
 
 		private bool canNotify = true;
-
-		//protected IList<ICriterion> Criterions { get; } = new List<ICriterion>();
 
 		public IUnitOfWork UoW {
 			get => uow;
@@ -28,22 +26,13 @@ namespace QS.Project.Filter
 		protected FilterViewModelBase(IInteractiveService interactiveService) : base(interactiveService)
 		{
 			UoW = UnitOfWorkFactory.CreateWithoutRoot();
-			PropertyChanged += (sender, e) => Refiltered?.Invoke(this, EventArgs.Empty);
+			PropertyChanged += (sender, e) => OnFiltered?.Invoke(sender, e);
 		}
 
-		event EventHandler IJournalFilter.OnFiltered {
-			add {
-				throw new NotImplementedException();
-			}
-
-			remove {
-				throw new NotImplementedException();
-			}
-		}
-
-		void IJournalFilter.Update()
+		public void Update()
 		{
-			throw new NotImplementedException();
+			if(canNotify)
+				OnFiltered?.Invoke(this, new EventArgs());
 		}
 
 		/// <summary>
@@ -59,31 +48,11 @@ namespace QS.Project.Filter
 				item(filter);
 			}
 			canNotify = true;
-			OnRefiltered();
+			Update();
 		}
-
-		protected void OnRefiltered()
-		{
-			if(canNotify)
-				Refiltered?.Invoke(this, new EventArgs());
-		}
-
-		/*public virtual ICriterion GetFilter()
-		{
-			ICriterion result = null;
-			foreach(var rst in Criterions) {
-				if(result == null)
-					result = rst;
-				else
-					result = Restrictions.And(result, rst);
-			}
-			Criterions.Clear();
-			return result;
-		}*/
 
 		protected virtual void ConfigureWithUow() { }
 
 		public void Dispose() => UoW?.Dispose();
-
 	}
 }

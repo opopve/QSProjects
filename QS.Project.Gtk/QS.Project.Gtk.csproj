@@ -166,6 +166,8 @@
     <Compile Include="Project.Dialogs.GtkUI\JournalActions\JournalPopupAction.cs" />
     <Compile Include="RepresentationModel.GtkUI\IJournalPopupItem.cs" />
     <Compile Include="RepresentationModel.GtkUI\JournalPopupItemFactory.cs" />
+    <Compile Include="Project.Search.GtkUI\SearchView.cs" />
+    <Compile Include="gtk-gui\QS.Project.Search.GtkUI.SearchView.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Widgets.GtkUI\" />
@@ -180,6 +182,7 @@
     <Folder Include="Project.Dialogs.GtkUI\ServiceDlg\" />
     <Folder Include="Permissions\" />
     <Folder Include="Icons.GtkUI\" />
+    <Folder Include="Project.Search.GtkUI\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\GammaBinding\GammaBinding\GammaBinding.csproj">

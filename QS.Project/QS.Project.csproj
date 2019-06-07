@@ -215,6 +215,7 @@
     <Compile Include="Project.Journal\JournalEntityConfigurator.cs" />
     <Compile Include="Project.Journal\JournalEntityDocumentsConfig.cs" />
     <Compile Include="Project.Journal\JournalCreateEntityDialogConfig.cs" />
+    <Compile Include="Project.Search\SearchViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Project.Domain\" />
@@ -241,6 +242,7 @@
     <Folder Include="ViewModels\" />
     <Folder Include="Project.Services\" />
     <Folder Include="Project.Filter\" />
+    <Folder Include="Project.Search\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

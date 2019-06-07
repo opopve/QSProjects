@@ -3,7 +3,7 @@ namespace QS.Project.Journal
 {
 	public interface IJournalSearch
 	{
-		string[] GetSearchValues();
+		string[] GetValuesToSearch();
 		event EventHandler OnSearch;
 		void Update();
 	}

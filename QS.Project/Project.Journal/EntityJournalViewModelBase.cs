@@ -8,6 +8,7 @@ using System.Linq;
 using QS.Deletion;
 using System.ComponentModel;
 using NHibernate;
+using NHibernate.Criterion;
 
 namespace QS.Project.Journal
 {
@@ -30,7 +31,7 @@ namespace QS.Project.Journal
 		}
 
 
-		#region Order
+		#region Ordering
 
 		private bool isDescOrder = false;
 		private Func<TNode, object> OrderFunction = x => x.Id;
@@ -41,10 +42,11 @@ namespace QS.Project.Journal
 			isDescOrder = desc;
 		}
 
-		#endregion Order
+		#endregion Ordering
 
-		protected JournalEntityConfigurator<TEntity, TNode> RegisterEntity<TEntity>(Func<IQueryOver<TEntity>> queryFunction)
+		protected JournalEntityConfigurator<TEntity, TNode> RegisterEntity<TEntity, TSubEntity>(Func<IQueryOver<TEntity, TSubEntity>> queryFunction)
 			where TEntity : class, IDomainObject, INotifyPropertyChanged, new()
+			where TSubEntity : class, IDomainObject, INotifyPropertyChanged, new()
 		{
 			if(queryFunction == null) {
 				throw new ArgumentNullException(nameof(queryFunction));
@@ -81,6 +83,40 @@ namespace QS.Project.Journal
 			loadedCount = 0;
 			cachedItemsList.Clear();
 		}
+
+		#region Search
+
+		System.Linq.Expressions.Expression<Func<object>>[] propertiesToSearchIn;
+		protected void RegisterPropertiesToSearchIn(params System.Linq.Expressions.Expression<Func<object>>[] properties)
+		{
+			propertiesToSearchIn = properties;
+		}
+
+		ICriterion GetCriterionForSearch()
+		{
+			ICriterion criterion = null;
+
+			if(Search == null)
+				throw new ArgumentNullException(nameof(Search));
+
+			var searchString = Search.GetValuesToSearch().FirstOrDefault();
+			if(string.IsNullOrWhiteSpace(searchString))
+				return criterion;
+			searchString = string.Concat('%', searchString, '%');
+
+			foreach(var expr in propertiesToSearchIn) {
+				var likeExpr = Restrictions.Like(Projections.Property(expr), searchString);
+				if(criterion == null)
+					criterion = likeExpr;
+				else
+					criterion = Restrictions.Or(criterion, likeExpr);
+			}
+
+			return criterion;
+		}
+
+		#endregion Search
+
 
 		#region Dynamic load
 
@@ -144,14 +180,20 @@ namespace QS.Project.Journal
 
 		private Dictionary<Type, EntityLoadInfo> entityLoadInfoItems = new Dictionary<Type, EntityLoadInfo>();
 
-		private void AddQuery<TEntity>(Func<IQueryOver<TEntity>> queryFunc)
+		private void AddQuery<TEntity, TSubEntity>(Func<IQueryOver<TEntity, TSubEntity>> queryFunc)
 			where TEntity : class, IDomainObject, INotifyPropertyChanged, new()
+			where TSubEntity : class, IDomainObject, INotifyPropertyChanged, new()
 		{
 			var entityType = typeof(TEntity);
 			if(entityLoadInfoItems.ContainsKey(entityType)) {
 				return;
 			}
 			var query = queryFunc.Invoke();
+
+			var criterionForSearch = GetCriterionForSearch();
+			if(criterionForSearch != null)
+				query.Where(criterionForSearch);
+
 			var info = new EntityLoadInfo(null, 0, 
 				(skip, take) => query.Skip(skip).Take(take).Future<TNode>(), 
 				() => query.Clone().ClearOrders().FutureValue<int>(),

@@ -33,10 +33,11 @@ namespace QS.Project.Search.GtkUI
 			w1.Expand = false;
 			// Container child hbox2.Gtk.Box+BoxChild
 			this.entSearchText = new global::Gamma.GtkWidgets.yEntry();
+			this.entSearchText.TooltipMarkup = "Введите фразу для поиска";
 			this.entSearchText.CanFocus = true;
 			this.entSearchText.Name = "entSearchText";
 			this.entSearchText.IsEditable = true;
-			this.entSearchText.InvisibleChar = '•';
+			this.entSearchText.InvisibleChar = '●';
 			this.hbox2.Add(this.entSearchText);
 			global::Gtk.Box.BoxChild w2 = ((global::Gtk.Box.BoxChild)(this.hbox2[this.entSearchText]));
 			w2.Position = 1;
